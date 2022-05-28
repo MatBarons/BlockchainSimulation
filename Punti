@@ -1,0 +1,20 @@
+-Ogni transazione ha un campo in più, chiamato n_of_hops, 
+che conta il numero di volte in cui è stata rifiutata da un nodo e passata a un amico
+
+-Lo spazio allocato in Shared Memory per i nodi è il doppio del numero di nodi,serve per allocare altri nodi che potrebbero venire creati successivamente dal master
+
+-common_ipcs non ha un main ma solo dei metodi che potrebbero servire a ogni tipo di processo (Node,User,Master). Contiene tutti i metodi necessari per lavorare con gli IPCS, compresi semafori e messageQueue, e un metodo per scegliere randomicamente un nodo  
+
+-Tutti gli ID per l'accesso alla memoria sono in una struct, e vengo passati ai processi User e Node come argomenti del argv
+
+-I semafori sono stati utilizzati in tre casi:
+  1)sincronizzazione processi
+  2)scrittura nel libro mastro
+  3)scrittura nella messageQ
+In tutti gli altri casi non si scrive mai contemporaneamente nelle stesse aree di memoria(intese come lo stesso indice di un array di nodi/user)
+
+-Il master non ha bisogno di essere notificato della morte di uno user con un segnale perchè le statistiche di uno user si trovano tutte in Shared Memory
+
+-NotifyDieMasterUser e check_master_trans controllano rispettivamente se ci sono ancora user vivi e se c'è ancora spazio nel libro mastro, in caso non sia cosi mandano un segnale al master, rispettivamente SIGUSR2 e SIGUSR1
+
+-Per mandare una transazione a un nodo amico ogni x secondi, il nodo usa la funzione alarm all'inizio della sua vita e l handler di SIGALRM avrà a sua volta una chiamata alla funzione alarm

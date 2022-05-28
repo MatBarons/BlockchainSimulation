@@ -1,0 +1,64 @@
+Master:
+  -Gestire simulazione
+  -Metodo per inserire i valori a Variables
+  -Gestione semafori (set value,get value,create,lock,release,remove)
+  -Free memory
+  -Creare SharedMemory
+  -Distruggere SharedMemory
+  -Stampare ogni secondo
+  -Creare la message queue
+  
+
+User:
+  -Creare Users(eseguito dal master)
+
+  -Creazione transazioni (metodo)
+
+  -Invio transazioni (metodo)
+
+  -Estrae un nodo casuale a cui inviare la transazione(metodo con rand?) 
+   e attende un intervallo di tempo (in nanosecondi) estratto casualmente tra SO_MIN_TRANS_GEN_NSEC e massimo SO_MAX_TRANS_GEN_NSEC. (wait/nanosleep?)
+
+  -Calcola il bilancio corrente a partire dal budget iniziale e facendo la somma algebrica(somme e differenze) delle ENTRATE e delle
+   USCITE REGISTRATE nelle transazioni presenti nel libro mastro, sottraendo gli importi delle transazioni SPEDITE MA NON ANCORA REGISTRATE
+   NEL LIBRO MASTRO (metodo per calcolare)
+
+  -un processo utente deve generare una transazione anche in risposta ad un segnale ricevuto (la scelta del
+   segnale è a discrezione degli sviluppatori) (come ricevo il segnale?) (user signal handler?)
+
+  -Se un processo non riesce ad inviare alcuna transazione per SO_RETRY volte consecutive, allora termina la sua
+   esecuzione, notificando il processo master (metodo per notificare e killare)
+
+  -Gestire la shared memory
+  
+  -Creare la comunicazione
+
+  -Calcolare gli userAlive
+
+
+Node:
+  -Creare Nodo(eseguito dal master)
+  
+  -Processare il blocco
+
+  -Controllare se il registro è pieno o la transazione esiste già
+
+  -Estrazione dalla transaction pool di un insieme di SO_BLOCK_SIZE−1 transazioni non ancora presenti nel
+   libro mastro
+
+  -Simula l’elaborazione di un blocco attraverso una attesa non attiva di un intervallo temporale casuale espresso
+   in nanosecondi compreso tra SO_MIN_TRANS_PROC_NSEC e SO_MAX_TRANS_PROC_NSEC.
+  
+  -Una volta completata l’elaborazione del blocco, scrive il nuovo blocco appena elaborato nel libro mastro, ed
+   elimina le transazioni eseguite con successo dal transaction pool.
+
+  -Ogni processo nodo memorizza privatamente la lista di transazioni ricevute da processare, chiamata transaction pool
+
+
+
+
+
+   ------------------- N.B. --------------------
+   Fare signal handler per node/user/master
+   Inserire i semafori
+   fare roba dei nodi amici
