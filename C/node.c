@@ -115,6 +115,7 @@ void signalHandlerNode(int sig,siginfo_t* siginfo,void* context){
 int check_master_trans(Transaction tr){
   int flag=1,i=0,j=0;
   if(ledger_node->last_id >= SO_REGISTRY_SIZE){
+    /* no more space in the registry */
     flag = 0;
   }else{
     while(i <= ledger_node->last_id){
