@@ -146,10 +146,7 @@ void createNodes(){
 
 void printTerminationRequirments(){
   int i,cont=0;
-  
 
-  
-  printf("Ragione della terminazione: %s\n",term_reason);
   for(i=0;i<all_conf->SO_USERS_NUM;i++){
     printf("utente %d con pid %d, bilancio %d\n",i,all_users[i].pid,all_users[i].budget);
   }
@@ -163,6 +160,7 @@ void printTerminationRequirments(){
   }
   printf("Il numero di utenti morti prematuramente è: %d\n",cont);
   printf("il numero di blocchi presenti nel libro mastro è:%d\n",ledger->last_id+1);
+  printf("Ragione della terminazione: %s\n",term_reason);
  
   
 }
@@ -193,6 +191,10 @@ void printEverySecond(){
           }
         }
         printf("Lo user con pid %d ha il bilancio più alto, che e: %d \n",pid_user_to_print,max_users);
+      }else{
+        for(i=0;i<all_conf->SO_USERS_NUM;i++){
+          printf("User con pid %d, ha bilancio %d\n",all_users[i].pid,all_users[i].budget);
+        }
       }
 
 
@@ -204,6 +206,10 @@ void printEverySecond(){
           }
         }
         printf("Il nodo con pid %d ha il bilancio più alto, che e: %d \n",pid_node_to_print,max_nodes);
+      }else{
+        for(i=0;i<all_conf->SO_NODES_NUM;i++){
+          printf("Node con pid %d, ha bilancio %d\n",all_nodes[i].pid,all_nodes[i].reward_sum);
+        }
       }
 
       printf("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_\n");

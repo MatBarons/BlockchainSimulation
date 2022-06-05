@@ -23,8 +23,8 @@
 
 /*macro personali */
 #define CLOCK_REALTIME 0
-#define MAX_PRINT_USERS 0
-#define MAX_PRINT_NODES 0
+#define MAX_PRINT_USERS 5
+#define MAX_PRINT_NODES 1
 
 /* macro sender */
 #define my_macro(x) x<-1 ? -(x) : (x)

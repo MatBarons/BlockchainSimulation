@@ -33,7 +33,6 @@ void dieNotifyMasterUser(pid_t pid_dead,int reason){
       }
     }
   }
-  raise(SIGINT);
 }
 
 void signalHandlerUser(int sig,siginfo_t* siginfo,void* context){
@@ -89,12 +88,14 @@ int calcBalance(int curr){
 int balanceCalc(){
   int sum,i=0,j=0,k=0;
   sum = config_user->SO_INIT_BUDGET;
+  
   for(i=0;i<ledger_user->last_id;i++){
     for(j=0;j<SO_BLOCK_SIZE;j++){
       if(ledger_user->array_of_blocks[i].transactions[j].receiver == getpid())
         sum = sum + ledger_user->array_of_blocks[i].transactions[j].quantity;
     }
   }
+
   for(k=0;k<non_ledger_size;k++){
     sum = sum - (non_ledgers_trans[k].quantity + non_ledgers_trans[k].reward);
   }
@@ -243,55 +244,3 @@ int main(int argc, char const *argv[]){
   return 0;
 }
 
-
-/*
-
-  void moveElementsInArray(int found){
-  while(found < non_ledger_size){
-    if(found+1 == non_ledger_size)
-      break;
-    non_ledgers_trans[found] = non_ledgers_trans[found+1];
-    found++;
-    
-  }
-  if(non_ledger_size != 0)
-    non_ledger_size--;
-}
-
-void clearNonLedgersTransArray(){
-  int i,j,k=0;
-  for(i=0;i<=ledger_user->last_id;i++){
-    for(j=0;j<SO_BLOCK_SIZE;j++){
-      while(k<non_ledger_size){
-         the next if checks if the transaction already exist in the ledger by comparing receivers,senders and timestamps 
-        if(ledger_user->array_of_blocks[i].transactions[j].receiver == non_ledgers_trans[k].receiver  &&  ledger_user->array_of_blocks[i].transactions[j].sender == non_ledgers_trans[k].sender && ledger_user->array_of_blocks[i].transactions[j].timestamp == non_ledgers_trans[k].timestamp){
-          moveElementsInArray(k); 
-        }else{
-          k++;
-        }
-      }   
-    }
-  }
-}
-
-int calcBalance(){
-  int sum,i=0,j=0;
-  sum = config_user->SO_INIT_BUDGET;
-  for(i=0;i<=ledger_user->last_id;i++){
-    for(j=0;j<SO_BLOCK_SIZE;j++){
-      if(ledger_user->array_of_blocks[i].transactions[j].receiver == getpid()){
-        sum = sum + ledger_user->array_of_blocks[i].transactions[j].quantity;
-      }
-      if(ledger_user->array_of_blocks[i].transactions[j].sender == getpid()){
-        sum = sum - (ledger_user->array_of_blocks[i].transactions[j].quantity + ledger_user->array_of_blocks[i].transactions[j].reward);
-      }
-    }
-  }
-  clearNonLedgersTransArray();
-  for(i=0;i<non_ledger_size;i++){
-    sum = sum - (non_ledgers_trans[i].quantity + non_ledgers_trans[i].reward);
-  }
-  return sum;
-}
-
-*/
