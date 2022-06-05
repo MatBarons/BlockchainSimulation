@@ -19,7 +19,7 @@
 
 /*da leggere a tempo di compilazione*/
 #define SO_REGISTRY_SIZE 1000
-#define SO_BLOCK_SIZE 5
+#define SO_BLOCK_SIZE 50
 
 /*macro personali */
 #define CLOCK_REALTIME 0

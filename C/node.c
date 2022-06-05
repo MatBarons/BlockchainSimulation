@@ -173,7 +173,7 @@ void runNode(){
   int flag;
 
   curr_pool_size = 0;
-  /*alarm(config_node->SO_SIM_SEC/2);*/
+  alarm(config_node->SO_SIM_SEC/2);
   while(1){
     if(msgrcv(ids_nodes.msgQ_id,&m,sizeof(m),getpid(),0) == -1 && errno != EINTR && errno != ENOMSG){
       perror("msgrcv failed in runNode()");
